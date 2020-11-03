@@ -8,7 +8,7 @@ using System.Text;
 
 namespace bitter_v2.Models
 {
-    class ApiHandler
+    public class ApiHandler
     {
 
         private static readonly HttpClient client = new HttpClient();

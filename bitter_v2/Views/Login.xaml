@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bitter_v2.Views.Login">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label HorizontalOptions="Fill" Padding="5" Text="Anmelden" FontSize="26" BackgroundColor="#03A9F4"></Label>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Name" Grid.Column="0" Grid.Row="0"/>
+                <Entry x:Name="username" Text="{Binding UserName}" Placeholder="Anmeldename oder Emailadresse" Grid.Column="1" Grid.Row="0"></Entry>
+                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Passwort" Grid.Column="0" Grid.Row="1"/>
+                <Entry x:Name="password" Text="{Binding Password}" Placeholder="Password" Grid.Column="1" Grid.Row="1"></Entry>
+                <Switch IsToggled="{Binding Remeberme}"/>
+            </Grid>
+            <Button Text="Anmelden" Clicked="Button_Clicked"></Button>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

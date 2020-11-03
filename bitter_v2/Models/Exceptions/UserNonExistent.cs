@@ -4,10 +4,13 @@ using System.Text;
 
 namespace bitter_v2.Models.Exceptions
 {
-    public class TweetNonExistent : Exception
+    public class UserNonExistent : Exception
     {
-        public TweetNonExistent(string msg) : base(msg)
+
+        public UserNonExistent(string msg) : base(msg)
         {
+
+
 
         }
     }

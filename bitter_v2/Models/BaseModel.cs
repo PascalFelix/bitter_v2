@@ -4,7 +4,7 @@ using System.Text;
 
 namespace bitter_v2.Models
 {
-    class BaseModel
+    public class BaseModel
     {
 
         protected ApiHandler ApiHandler = new ApiHandler();

@@ -8,15 +8,23 @@ using System.Threading.Tasks;
 
 namespace bitter_v2.Models
 {
-    class Tweet : BaseModel
+    public class Tweet : BaseModel
     {
 
-        protected string TweetID = "";
-        public string Content = "";
-        protected string Likes = "";
-        protected string Retweets = "";
+        public string TweetID { get; set; }
+        public string Content { get; set; }
+        public string Likes { get; set; }
+        public string Retweets { get; set; }
+        public string UserID { get; set; }
 
-        public virtual async Task<bool> LoadAsync(string tweetID)
+        public User User { get; set; }
+
+        public Tweet()
+        {
+            User = new User();
+        }
+
+        public virtual async Task<Tweet> LoadAsync(string tweetID)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("method", "get");
@@ -40,10 +48,12 @@ namespace bitter_v2.Models
                     Content = value["content"].ToString();
                     Likes = value["likes"].ToString();
                     Retweets = value["retweets"].ToString();
+                    UserID = value["userid"].ToString();
+                    await User.LoadAsync(UserID);
                 }
 
             }
-            return true;
+            return this;
         }
 
     }
