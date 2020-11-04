@@ -22,7 +22,7 @@ namespace bitter_v2.Models
         public string ID { get; set; }
         public string Follower { get; set; }
         public string Follows { get; set; }
-
+        public string Tweets { get; set; }
 
         public virtual async Task<User> LoadAsync(string userID)
         {
@@ -48,6 +48,8 @@ namespace bitter_v2.Models
                     UserName = value["username"].ToString();
                     Follower = value["follower"].ToString();
                     Follows = value["follows"].ToString();
+                    Tweets = value["tweets"].ToString();
+                    
                 }
 
             }

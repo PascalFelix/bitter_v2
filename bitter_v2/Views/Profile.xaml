@@ -21,8 +21,8 @@
                 <Label Text="{Binding TweetsCount}" Grid.Column="0" Grid.Row="0"/>
                 <Label Text="{Binding FollowerCount}" Grid.Column="1" Grid.Row="0"/>
                 <Label Text="{Binding FollowsCount}" Grid.Column="2" Grid.Row="0"/>
-                <ScrollView  BackgroundColor="Gray"  Grid.Row="1" Grid.ColumnSpan="3">
-                    <StackLayout>
+                <ScrollView  BackgroundColor="Gray"  Grid.Row="1" Grid.ColumnSpan="3" IsClippedToBounds="True">
+                    <StackLayout HeightRequest="350">
                         <ListView ItemsSource="{Binding Tweets}" ItemSelected="OnListViewItemSelected" ItemTapped="OnListViewItemTapped">
                             <ListView.ItemTemplate>
                                 <DataTemplate>

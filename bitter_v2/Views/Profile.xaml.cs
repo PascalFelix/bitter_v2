@@ -36,7 +36,7 @@ namespace bitter_v2.Views
         {
             get
             {
-                return "Tweets (" + Tweets.Count + ")";
+                return "Tweets (" + User.Tweets + ")";
             }
         }
 
