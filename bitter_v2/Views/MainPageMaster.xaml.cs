@@ -42,6 +42,7 @@ namespace bitter_v2.Views
                 {
                     new MainPageMasterMenuItem { Id = 0, Title = "Feed",TargetType = typeof(Feed) },
                     new MainPageMasterMenuItem { Id = 1, Title = "Test",TargetType = typeof(MainPageDetail) },
+                    new MainPageMasterMenuItem { Id = 2, Title = "Profil",TargetType = typeof(Profile) },
 
                 });
             }
