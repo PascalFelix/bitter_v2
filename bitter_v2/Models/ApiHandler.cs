@@ -30,9 +30,9 @@ namespace bitter_v2.Models
         {
             string output = JsonConvert.SerializeObject(data);
             var content = new FormUrlEncodedContent(data);
-            var response = client.PostAsync(ApiUrl, content);
-            var result = response.Result;
-            return await result.Content.ReadAsStringAsync();
+            var response = await client.PostAsync(ApiUrl, content);
+            //var result = response.Result;
+            return await response.Content.ReadAsStringAsync();
         }
 
     }

@@ -33,14 +33,10 @@ namespace bitter_v2.Views
             Tweets.CollectionChanged += Tweets_CollectionChanged;
             var Stack = (StackLayout)this.FindByName("StackList");
             Stack.Children.Add(FeedView);
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
-            }).Start();
+
+            FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
         }
 
-        private bool TweetsDetailsOn = false;
         private void FeedView_OnTweetSelected(Tweet tweet)
         {
             if (!DetailsOpen)
@@ -52,24 +48,15 @@ namespace bitter_v2.Views
             }
         }
 
-        public void Refresh()
+        public async void Refresh()
         {
-
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                Tweets.Clear();
-                FeedObject.ResetOffset();
-                FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
-            }).Start();
+            Tweets.Clear();
+            FeedObject.ResetOffset();
+            await FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
         }
-        private void FeedView_OnEndScrollAsync(object sender)
+        private async void FeedView_OnEndScrollAsync(object sender)
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
-            }).Start();
+            await FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
         }
 
         private void Tweets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
@@ -89,13 +76,6 @@ namespace bitter_v2.Views
 
 
 
-
-        void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Tweet tappedItem = e.Item as Tweet;
-        }
-
-        private bool NewTweetDisplayed = false;
         private NewTweet NewTweet = null;
         private void ImageButton_Pressed(object sender, EventArgs e)
         {
@@ -121,7 +101,6 @@ namespace bitter_v2.Views
         {
             var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
             AbsoluteLayout.Children.Remove(view);
-            // NewTweet = null;
             DetailsOpen = false;
         }
 

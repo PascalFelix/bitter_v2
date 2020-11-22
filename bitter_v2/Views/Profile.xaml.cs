@@ -68,7 +68,7 @@ namespace bitter_v2.Views
             FeedView.OnEndScroll += FeedView_OnEndScroll;
             Tweets.CollectionChanged += Tweets_CollectionChanged;
 
-            var tmp = TweetList.LoadAsync(User.ID, "0").Result;
+            TweetList.LoadAsync(User.ID, "0");
 
             var Grid = (Grid)this.FindByName("ProfileGrid");
             FeedView.IsClippedToBounds = true;
@@ -78,14 +78,12 @@ namespace bitter_v2.Views
             Grid.SetColumnSpan(FeedView, 3);
         }
 
-        public void Refresh()
+        public async void Refresh()
         {
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-                Tweets = new ObservableCollection<Tweet>();
-                TweetList.LoadAsync(User.ID, "0");
-            }).Start();
+
+            Tweets = new ObservableCollection<Tweet>();
+            await TweetList.LoadAsync(User.ID, "0");
+
         }
 
         private void FeedView_OnEndScroll(object sender)

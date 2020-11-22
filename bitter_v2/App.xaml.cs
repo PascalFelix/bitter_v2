@@ -2,6 +2,7 @@
 using bitter_v2.Views;
 using System;
 using Xamarin.Forms;
+using Xamarin.Forms.Markup;
 using Xamarin.Forms.Xaml;
 
 namespace bitter_v2
@@ -19,17 +20,28 @@ namespace bitter_v2
             Relogin();
         }
 
-        public void Relogin()
+        public  void Relogin()
         {
-            User.Login();
-            if (User.IsLoggedIn)
+            User.Login().ContinueWith(x=>
             {
-                MainPage = new MainPage();
-            }
-            else
-            {
-                MainPage = new Login(this);
-            }
+                if (User.IsLoggedIn)
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        MainPage = new MainPage();
+                    });
+
+                }
+                else
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        MainPage = new Login(this);
+                    });
+
+                }
+            });
+            MainPage = new Login(this);
         }
         public void Logout()
         {

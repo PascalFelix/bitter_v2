@@ -72,10 +72,11 @@ namespace bitter_v2.Models
         {
             _GetLikeImgSrc = LikedImageSrc;
             User = new User();
+
             ReloadButtonClicked = new Command(async x =>
-            {
-                await ToggleLike(App.User);
-            });
+        {
+            await ToggleLike(App.User);
+        });
         }
 
         public virtual async Task<Tweet> LoadAsync(string tweetID)
@@ -84,6 +85,7 @@ namespace bitter_v2.Models
             data.Add("method", "get");
             data.Add("type", "tweet");
             data.Add("id", tweetID);
+
             data.Add("userid", App.User.User.ID);
             TweetID = tweetID;
             var task = await base.LoadAsync(data);

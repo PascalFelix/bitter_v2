@@ -81,12 +81,12 @@ namespace bitter_v2.Models
             }
         }
 
-        public UserAuthenticator(App app)
+        public UserAuthenticator(App app = null)
         {
             HeadAppPage = app;
         }
 
-        public void Login(string username = null, string password = null)
+        public async Task Login(string username = null, string password = null)
         {
             //TODO IMPLEMENT LOGIN USER ALWAYS 1
             if (!String.IsNullOrEmpty(username))
@@ -99,28 +99,29 @@ namespace bitter_v2.Models
                 Password = password;
             }
 
-            var userID = Authenticate();
+            var userID = await Authenticate();
             if (!String.IsNullOrEmpty(userID))
             {
                 var tmpUser = new User();
-                _loggedUser = tmpUser.LoadAsync(userID).Result;
+                _loggedUser = await tmpUser.LoadAsync(userID);
                 _isLoggedIn = true;
             }
-
         }
 
 
 
-        private string Authenticate()
+        private async Task<string> Authenticate()
         {
             var Helper = new LoginHelper();
 
-            if(Helper.LoadAsync(Username,Password).Result.Type == "1")
+            await Helper.LoadAsync(Username, Password);
+
+            if (Helper.Type == "1")
             {
                 return Helper.UserID;
             }
 
-            return null;
+            return "";
         }
 
         public void Logout()
@@ -130,7 +131,7 @@ namespace bitter_v2.Models
             HeadAppPage.Logout();
         }
 
-        class LoginHelper : BaseModel
+        public class LoginHelper : BaseModel
         {
 
             public string Type { get; set; }

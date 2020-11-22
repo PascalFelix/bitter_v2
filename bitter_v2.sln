@@ -7,7 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bitter_v2.Android", "bitter
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bitter_v2.iOS", "bitter_v2.iOS\bitter_v2.iOS.csproj", "{B0EC9378-7CED-4F56-9F16-6C59C55B16AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "bitter_v2", "bitter_v2\bitter_v2.csproj", "{B1B913F7-D058-4C5D-8391-62849CF522A1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "bitter_v2", "bitter_v2\bitter_v2.csproj", "{B1B913F7-D058-4C5D-8391-62849CF522A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{928A519D-FA0F-44E2-85FD-22D76A190D11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -73,6 +75,18 @@ Global
 		{B1B913F7-D058-4C5D-8391-62849CF522A1}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{B1B913F7-D058-4C5D-8391-62849CF522A1}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 		{B1B913F7-D058-4C5D-8391-62849CF522A1}.Release|iPhoneSimulator.Deploy.0 = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|Any CPU.Build.0 = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|iPhone.Build.0 = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{928A519D-FA0F-44E2-85FD-22D76A190D11}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

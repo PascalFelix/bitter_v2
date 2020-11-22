@@ -12,7 +12,9 @@ namespace bitter_v2.Models
 
         public virtual async System.Threading.Tasks.Task<string> LoadAsync(Dictionary<string,string> data)
         {
-            return await ApiHandler.ExcecuteAsync(data);
+            var test = ApiHandler.ExcecuteAsync(data);
+
+            return await test;
         }
 
 
