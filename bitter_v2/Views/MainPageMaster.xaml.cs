@@ -29,6 +29,7 @@ namespace bitter_v2.Views
         private void Button_Clicked(object sender, EventArgs e)
         {
             App.User.Logout();
+            App.User = new UserAuthenticator(App.app);
         }
         class MainPageMasterViewModel : INotifyPropertyChanged
         {
@@ -42,6 +43,7 @@ namespace bitter_v2.Views
                 {
                     new MainPageMasterMenuItem { Id = 0, Title = "Feed",TargetType = typeof(Feed) },
                     new MainPageMasterMenuItem { Id = 1, Title = "Profil",TargetType = typeof(Profile) },
+                    new MainPageMasterMenuItem { Id = 2, Title = "Alle Benutzer",TargetType = typeof(UserList) },
 
                 });
             }

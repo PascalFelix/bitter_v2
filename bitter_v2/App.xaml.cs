@@ -11,9 +11,12 @@ namespace bitter_v2
     {
 
         public static UserAuthenticator User = null;
+        public static App app = null;
+
 
         public App()
         {
+            app = this;
             User = new UserAuthenticator(this);
           
             InitializeComponent();
@@ -22,7 +25,7 @@ namespace bitter_v2
 
         public  void Relogin()
         {
-            User.Login().ContinueWith(x=>
+            User.Login().ContinueWith(x =>
             {
                 if (User.IsLoggedIn)
                 {
@@ -41,7 +44,7 @@ namespace bitter_v2
 
                 }
             });
-            MainPage = new Login(this);
+            MainPage = new Loading();
         }
         public void Logout()
         {

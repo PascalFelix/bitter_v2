@@ -12,6 +12,7 @@ namespace bitter_v2.Models
     {
         protected int offsetIncrement = 0;
         protected int offset = 0;
+        public const int OffsetInt = 10;
         protected List<string> tweetIDs = new List<string>();
         public ObservableCollection<Tweet> Tweets = new ObservableCollection<Tweet>();
 
@@ -29,8 +30,8 @@ namespace bitter_v2.Models
 
         public void ResetOffset()
         {
-            offsetIncrement = 10;
-            offset = -10;
+            offsetIncrement = Feed.OffsetInt;
+            offset = Feed.OffsetInt*-1;
         }
 
         public virtual async Task<Feed> LoadAsync(string userID, string password, string offset)

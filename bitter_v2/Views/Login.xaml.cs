@@ -48,6 +48,24 @@ namespace bitter_v2.Views
             }
         }
 
+
+        public string RegisterUserName
+        {
+            get;
+            set;
+        }
+        public string RegisterPassword
+        {
+            get;
+            set;
+        }
+        public string RegisterPassword2
+        {
+            get;
+            set;
+        }
+
+
         public Login(App app)
         {
             BindingContext = this;
@@ -60,6 +78,24 @@ namespace bitter_v2.Views
             App.User.Username = UserName;
             App.User.Password = Password;
             HeadApp.Relogin();
+        }
+        private async void RegisterBtnClicked(object sender, EventArgs e)
+        {
+            try
+            {
+                var returnValue = await App.User.Register(RegisterUserName, RegisterPassword, RegisterPassword2);
+                if (returnValue)
+                {
+                    App.User.Username = RegisterUserName;
+                    App.User.Password = RegisterPassword;
+                    Remeberme = true;
+                    HeadApp.Relogin();
+                }
+            }
+            catch (Exception ex)
+            {
+               await DisplayAlert("Fehler", ex.Message, "Okay");
+            }
         }
     }
 }

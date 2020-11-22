@@ -64,18 +64,36 @@ namespace bitter_v2.Views
             }
         }
 
+        private bool _isFirstLoad = true;
+        private bool isFristLoad
+        {
+            get
+            {
+                return _isFirstLoad;
+            }
+            set
+            {
+                _isFirstLoad = value;
+            }
+        }
+
         //public Command ReloadButtonClicked { get; set; }
         public FeedView(IRefreshable _refreshable)
         {
             BindingContext = this;
             refreshable = _refreshable;
+            IsRefreshing = true;
             InitializeComponent();
             Tweets.CollectionChanged += Tweets_CollectionChanged;
 
         }
         private void Tweets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
-
+            if(Tweets.Count == Models.Feed.OffsetInt && isFristLoad)
+            {
+                isFristLoad = false;
+                IsRefreshing = false;
+            }
         }
 
 
@@ -95,10 +113,9 @@ namespace bitter_v2.Views
             {
                 IsRefreshing = true;
                 OnEndScroll(this);
-            }else
-            {
                 IsRefreshing = false;
             }
+
         }
 
 

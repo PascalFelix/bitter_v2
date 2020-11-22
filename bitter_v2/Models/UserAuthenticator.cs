@@ -1,4 +1,5 @@
-﻿using bitter_v2.Views;
+﻿using bitter_v2.Models.Exceptions;
+using bitter_v2.Views;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
@@ -81,7 +82,7 @@ namespace bitter_v2.Models
             }
         }
 
-        public UserAuthenticator(App app = null)
+        public UserAuthenticator(App app)
         {
             HeadAppPage = app;
         }
@@ -106,6 +107,34 @@ namespace bitter_v2.Models
                 _loggedUser = await tmpUser.LoadAsync(userID);
                 _isLoggedIn = true;
             }
+        }
+
+        public async Task<bool> Register(string username, string password, string password2)
+        {
+
+            var Helper = new LoginHelper();
+
+            if (String.IsNullOrEmpty(username))
+            {
+                throw new RegistrationFailed("Benutzername ist leer");
+
+            }
+            else
+            {
+                var userNameTaken = await Helper.IsUsernameTaken(username);
+                if (userNameTaken)
+                {
+                    throw new RegistrationFailed("Benutzername bereits vergeben");
+                }
+            }
+
+            if (password != password2 && !String.IsNullOrEmpty(password))
+            {
+                throw new RegistrationFailed("Passwörter sind nicht gleich");
+            }
+
+            return await Helper.RegisterUser(username, password);
+
         }
 
 
@@ -159,6 +188,46 @@ namespace bitter_v2.Models
                 }
                 return this;
             }
+
+            public async Task<bool> IsUsernameTaken(string username)
+            {
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add("method", "get");
+                data.Add("type", "usernametaken");
+                data.Add("username", username);
+                var task = await base.LoadAsync(data);
+                JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
+
+                foreach (var x in tmp)
+                {
+                    var value = x.Value;
+                    return value["taken"].ToString() == "True" ? true : false;
+
+                }
+                return true;
+
+            }
+
+            public async Task<bool> RegisterUser(string username, string password)
+            {
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                data.Add("method", "put");
+                data.Add("type", "registeruser");
+                data.Add("username", username);
+                data.Add("password", password);
+                var task = await base.LoadAsync(data);
+                JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
+
+
+                foreach (var x in tmp)
+                {
+                    var value = x.Value;
+                    return value["status"].ToString() == "True" ? true : false;
+
+                }
+                return true;
+            }
+
 
         }
 
