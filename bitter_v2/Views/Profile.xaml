@@ -4,11 +4,11 @@
              x:Class="bitter_v2.Views.Profile">
     <ContentPage.Content>
         <StackLayout>
-            <StackLayout  MinimumHeightRequest="120" HeightRequest="120" BackgroundColor="Orange">
+            <StackLayout x:Name="ListStack" MinimumHeightRequest="120" HeightRequest="120" BackgroundColor="Orange">
                 <Label Text="BANNER PLACEHOLDER"/>
                 <Label VerticalOptions="EndAndExpand" Text="{Binding User.UserName}"/>
             </StackLayout>
-            <Grid>
+            <Grid x:Name="ProfileGrid">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="32"/>
                     <RowDefinition Height="*"/>
@@ -21,45 +21,7 @@
                 <Label Text="{Binding TweetsCount}" Grid.Column="0" Grid.Row="0"/>
                 <Label Text="{Binding FollowerCount}" Grid.Column="1" Grid.Row="0"/>
                 <Label Text="{Binding FollowsCount}" Grid.Column="2" Grid.Row="0"/>
-                <ScrollView  BackgroundColor="Gray"  Grid.Row="1" Grid.ColumnSpan="3" IsClippedToBounds="True">
-                    <StackLayout HeightRequest="350">
-                        <ListView ItemsSource="{Binding Tweets}" ItemSelected="OnListViewItemSelected" ItemTapped="OnListViewItemTapped">
-                            <ListView.ItemTemplate>
-                                <DataTemplate>
-                                    <ViewCell>
-                                        <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="20"/>
-                                                <RowDefinition Height="50"/>
-                                            </Grid.RowDefinitions>
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="50"/>
-                                                <ColumnDefinition />
-                                                <ColumnDefinition />
-                                            </Grid.ColumnDefinitions>
-                                            <Image Source="img.png"    
-                                       HorizontalOptions="Center"
-                                       Grid.Column="0" 
-                                       Grid.Row="0" />
-                                            <Label Text="{Binding User.UserName}" 
-                                       HorizontalOptions="Start"
-                                       Grid.Column="1" 
-                                       Grid.Row="0" 
-                                       FontFamily="Calibri" 
-                                       FontSize="16"/>
-                                            <Label Text="{Binding Content}" 
-                                       HorizontalOptions="Fill" 
-                                       Grid.ColumnSpan="2"
-                                       Grid.Column="1"  
-                                       Grid.Row="1"/>
-                                        </Grid>
-
-                                    </ViewCell>
-                                </DataTemplate>
-                            </ListView.ItemTemplate>
-                        </ListView>
-                    </StackLayout>
-                </ScrollView>
+               
             </Grid>
         </StackLayout>
     </ContentPage.Content>

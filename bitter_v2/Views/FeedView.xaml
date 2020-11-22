@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bitter_v2.Views.FeedView">
+    <StackLayout>
+
+        <StackLayout >
+            <ListView ItemsSource="{Binding Tweets}" ItemSelected="OnListViewItemSelected" 
+                          ItemTapped="OnListViewItemTapped" 
+                          ItemAppearing="ListView_ItemAppearing"
+                          BackgroundColor="LightBlue"
+                          IsPullToRefreshEnabled="True"
+                          HasUnevenRows="True"
+                          IsRefreshing="{Binding IsRefreshing}" 
+                          RefreshCommand="{Binding RefreshCommand}"
+                      x:Name="TweetListView"
+                           >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="test123">
+                        <ViewCell x:Name="{Binding TweetID}">
+                            <Grid BackgroundColor="Bisque">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="Auto"/>
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="50"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Source="img.png"    
+                                       HorizontalOptions="Center"
+                                       Grid.Column="0" 
+                                       Grid.Row="0" />
+                                <Label Text="{Binding User.UserName}" 
+                                       HorizontalOptions="Start"
+                                       Grid.Column="1" 
+                                       Grid.Row="0" 
+                                       FontFamily="Calibri" 
+                                       FontSize="16"/>
+                                <Label Text="{Binding Content}" 
+                                       HorizontalOptions="Fill" 
+                                       HeightRequest="100"
+                                       Grid.ColumnSpan="2"
+                                       Grid.Column="1"  
+                                       Grid.Row="1"/>
+                                <ImageButton 
+                                    CommandParameter="{Binding .}"                                     
+                                    Command="{Binding ReloadButtonClicked}"
+                                    BackgroundColor="Transparent"
+                                    Grid.Row="2"
+                                    Grid.Column="1"  
+                                    Source="{Binding GetLikeImgSrc}"
+                                    HeightRequest="50"
+                                     />
+                            </Grid>
+
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+
+    </StackLayout>
+</ContentView>

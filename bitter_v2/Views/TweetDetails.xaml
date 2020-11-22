@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bitter_v2.Views.TweetDetails">
+    <ContentView.Content>
+
+        <Frame CornerRadius="30"  
+                OutlineColor="White" 
+                 Padding="0">
+
+            <StackLayout>
+                <Label BackgroundColor="#03A9F4" Text="       Details" HorizontalOptions="FillAndExpand" />
+                <StackLayout Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="150" >
+                    <Label 
+                        Text="{Binding Tweet.Content}"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="80"
+                           />
+                    <StackLayout BackgroundColor="Red" HeightRequest="50">
+                        <Label Text="Comments placeholder"></Label>
+                        
+                    </StackLayout>
+                    <ImageButton 
+                                    CommandParameter="{Binding .}"                                     
+                                    Command="{Binding Tweet.ReloadButtonClicked}"
+                                    BackgroundColor="Transparent"
+                                    Grid.Row="2"
+                                    Grid.Column="1"  
+                                    Source="{Binding Tweet.GetLikeImgSrc}"
+                                    HeightRequest="50"
+                                     />
+                    <Button Clicked="Button_Clicked" Text="Tweeten" BackgroundColor="LightBlue" HorizontalOptions="EndAndExpand"/>
+                </StackLayout>
+            </StackLayout>
+
+
+        </Frame>
+
+    </ContentView.Content>
+</ContentView>

@@ -41,8 +41,7 @@ namespace bitter_v2.Views
                 MenuItems = new ObservableCollection<MainPageMasterMenuItem>(new[]
                 {
                     new MainPageMasterMenuItem { Id = 0, Title = "Feed",TargetType = typeof(Feed) },
-                    new MainPageMasterMenuItem { Id = 1, Title = "Test",TargetType = typeof(MainPageDetail) },
-                    new MainPageMasterMenuItem { Id = 2, Title = "Profil",TargetType = typeof(Profile) },
+                    new MainPageMasterMenuItem { Id = 1, Title = "Profil",TargetType = typeof(Profile) },
 
                 });
             }

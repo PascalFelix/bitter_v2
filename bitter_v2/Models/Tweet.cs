@@ -3,25 +3,79 @@ using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Xamarin.Forms;
 
 namespace bitter_v2.Models
 {
-    public class Tweet : BaseModel
+    public class Tweet : BaseModel, INotifyPropertyChanged
     {
+
+        private string NotLikedImageSrc = "noLike.img";
+        private string LikedImageSrc = "like.img";
+
+
+
+        public Command ReloadButtonClicked { get; set; }
 
         public string TweetID { get; set; }
         public string Content { get; set; }
         public string Likes { get; set; }
         public string Retweets { get; set; }
         public string UserID { get; set; }
+        public string Timestamp { get; set; }
+
+
+
+        private bool _UserLikedTweet = false;
+        public bool UserLikedTweet
+        {
+            get
+            {
+                return _UserLikedTweet;
+            }
+            set
+            {
+                if (value)
+                {
+                    GetLikeImgSrc = LikedImageSrc;
+                }
+                else
+                {
+                    GetLikeImgSrc = NotLikedImageSrc;
+                }
+                OnPropertyChanged("GetLikeImgSrc");
+                _UserLikedTweet = value;
+            }
+        }
+
+        private string _GetLikeImgSrc = "";
+        public string GetLikeImgSrc
+        {
+            get
+            {
+                return _GetLikeImgSrc;
+            }
+            set
+            {
+                _GetLikeImgSrc = value;
+            }
+        }
+
 
         public User User { get; set; }
 
         public Tweet()
         {
+            _GetLikeImgSrc = LikedImageSrc;
             User = new User();
+            ReloadButtonClicked = new Command(async x =>
+            {
+                await ToggleLike(App.User);
+            });
         }
 
         public virtual async Task<Tweet> LoadAsync(string tweetID)
@@ -30,6 +84,7 @@ namespace bitter_v2.Models
             data.Add("method", "get");
             data.Add("type", "tweet");
             data.Add("id", tweetID);
+            data.Add("userid", App.User.User.ID);
             TweetID = tweetID;
             var task = await base.LoadAsync(data);
             JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
@@ -49,11 +104,53 @@ namespace bitter_v2.Models
                     Likes = value["likes"].ToString();
                     Retweets = value["retweets"].ToString();
                     UserID = value["userid"].ToString();
+                    Timestamp = value["timestamp"].ToString();
+                    var tmp2 = value["userlikedtweet"].ToString();
+                    UserLikedTweet = tmp2 == "True" ? true : false;
                     await User.LoadAsync(UserID);
                 }
 
             }
             return this;
+        }
+
+        public async Task<bool> PutTweet(UserAuthenticator userAuthenticator, string tweet)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("method", "put");
+            data.Add("type", "tweet");
+            data.Add("username", userAuthenticator.Username);
+            data.Add("password", userAuthenticator.Password);
+            data.Add("tweet", tweet);
+            var task = await base.LoadAsync(data);
+            JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
+            foreach (var x in tmp)
+            {
+                string name = x.Key;
+                var value = x.Value;
+                return value["status"].ToString() == "false" ? false : true;
+            }
+            return false;
+        }
+
+        public async Task<bool> ToggleLike(UserAuthenticator userAuthenticator)
+        {
+            Dictionary<string, string> data = new Dictionary<string, string>();
+            data.Add("method", "put");
+            data.Add("type", "like");
+            data.Add("username", userAuthenticator.Username);
+            data.Add("password", userAuthenticator.Password);
+            data.Add("tweetid", TweetID);
+            UserLikedTweet = !UserLikedTweet;
+            var task = await base.LoadAsync(data);
+            JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
+            foreach (var x in tmp)
+            {
+                string name = x.Key;
+                var value = x.Value;
+                return value["status"].ToString() == "false" ? false : true;
+            }
+            return false;
         }
 
     }

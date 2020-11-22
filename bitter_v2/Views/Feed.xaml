@@ -2,45 +2,25 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bitter_v2.Views.Feed">
-    <ContentPage.Content>
-        <StackLayout>
-            <ScrollView>
-                <ListView ItemsSource="{Binding Tweets}" ItemSelected="OnListViewItemSelected" ItemTapped="OnListViewItemTapped">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <ViewCell>
-                                <Grid>
-                                    <Grid.RowDefinitions>
-                                        <RowDefinition Height="20"/>
-                                        <RowDefinition Height="50"/>
-                                    </Grid.RowDefinitions>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="50"/>
-                                        <ColumnDefinition />
-                                        <ColumnDefinition />
-                                    </Grid.ColumnDefinitions>
-                                    <Image Source="img.png"    
-                                       HorizontalOptions="Center"
-                                       Grid.Column="0" 
-                                       Grid.Row="0" />
-                                    <Label Text="{Binding User.UserName}" 
-                                       HorizontalOptions="Start"
-                                       Grid.Column="1" 
-                                       Grid.Row="0" 
-                                       FontFamily="Calibri" 
-                                       FontSize="16"/>
-                                    <Label Text="{Binding Content}" 
-                                       HorizontalOptions="Fill" 
-                                       Grid.ColumnSpan="2"
-                                       Grid.Column="1"  
-                                       Grid.Row="1"/>
-                                </Grid>
 
-                            </ViewCell>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-            </ScrollView>
-        </StackLayout>
+    <ContentPage.Content>
+        <AbsoluteLayout x:Name="TestLayout">
+
+
+            <StackLayout x:Name="StackList">
+
+            </StackLayout>
+            <ImageButton
+            AbsoluteLayout.LayoutBounds="0.95,0.95,40,40"
+            AbsoluteLayout.LayoutFlags="PositionProportional"
+            BackgroundColor="DarkBlue"
+            CornerRadius="80"
+            HeightRequest="40"
+            Source="img.png"
+                Pressed="ImageButton_Pressed"
+            WidthRequest="40" />
+        </AbsoluteLayout>
+
     </ContentPage.Content>
+
 </ContentPage>
