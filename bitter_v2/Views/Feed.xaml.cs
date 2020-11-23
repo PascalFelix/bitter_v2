@@ -43,7 +43,7 @@ namespace bitter_v2.Views
             {
                 var details = new TweetDetails(tweet, this);
                 var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
-                AbsoluteLayout.Children.Add(details, new Rectangle(10, 10, AbsoluteLayout.Width - 20, 200));
+                AbsoluteLayout.Children.Add(details, new Rectangle(10, 10, AbsoluteLayout.Width - 20, 450));
                 DetailsOpen = true;
             }
         }
@@ -87,7 +87,7 @@ namespace bitter_v2.Views
                 AbsoluteLayout.Children.Add(NewTweet, new Rectangle(10, 10, AbsoluteLayout.Width - 20, 200));
                 DetailsOpen = true;
             }
-            else
+            else if(NewTweet != null)
             {
                 var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
                 AbsoluteLayout.Children.Remove(NewTweet);

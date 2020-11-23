@@ -2,9 +2,64 @@
 <ContentView xmlns="http://xamarin.com/schemas/2014/forms" 
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bitter_v2.Views.UserListView">
-  <ContentView.Content>
-      <StackLayout>
-          <Label Text="Hello Xamarin.Forms!" />
-      </StackLayout>
-  </ContentView.Content>
+    <ContentView.Content>
+        <StackLayout>
+            <ListView ItemsSource="{Binding UserList}" 
+                          ItemTapped="ListView_ItemTapped"
+                          ItemAppearing="ListView_ItemAppearing"
+                          BackgroundColor="LightBlue"
+                          IsPullToRefreshEnabled="True"
+                          HasUnevenRows="True"
+                          x:Name="UserlistView"
+                           >
+                <ListView.ItemTemplate>
+                    <DataTemplate x:Name="test123">
+                        <ViewCell>
+                            <Frame     Margin="0"
+                                       Padding="0"
+                                       BorderColor="Blue">
+                                <Grid BackgroundColor="LightBlue" >
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="60"/>
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label Text="{Binding UserName}" 
+                                       HorizontalOptions="Start"
+                                       Grid.Column="0" 
+                                       VerticalOptions="Center"
+                                       Margin="10"
+                                       Grid.Row="0" />
+                                    <Button
+                                    BorderRadius="20"
+                                    BorderWidth="1" 
+                                    BorderColor="Blue"
+                                    WidthRequest="80"
+                                    HorizontalOptions="End"
+                                    VerticalOptions="Center"
+                                    Margin="10"
+                                    HeightRequest="35"
+                                 
+                                    Grid.Column="1" 
+                                    Grid.Row="0" 
+                                    Text="Folgen"
+                                    FontSize="12"
+                                    IsVisible="{Binding FollowPossible}"   
+                                    BackgroundColor="{Binding GetFollowedBackgroundColor}"
+                                        
+                                    CommandParameter="{Binding .}"                                     
+                                    Command="{Binding FollowCommand}"
+                                  
+                                    />
+                                </Grid>
+                            </Frame>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </StackLayout>
+    </ContentView.Content>
 </ContentView>

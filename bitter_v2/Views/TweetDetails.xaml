@@ -9,27 +9,44 @@
                  Padding="0">
 
             <StackLayout>
-                <Label BackgroundColor="#03A9F4" Text="       Details" HorizontalOptions="FillAndExpand" />
-                <StackLayout Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="150" >
+                <Grid BackgroundColor="#03A9F4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button BackgroundColor="#03A9F4" WidthRequest="40"  VerticalOptions="Fill"  Grid.Row="0" Grid.Column="0"  Clicked="Button_Clicked" Text="&lt;-"/>
+                    <Label Grid.Row="0" Grid.Column="1" FontSize="20"  Text="Details" VerticalOptions="Center"  />
+
+                </Grid>
+
+                <StackLayout Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="390" >
+                    <Label 
+                        Text="{Binding Tweet.User.UserName}"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="25"
+                           />
                     <Label 
                         Text="{Binding Tweet.Content}"
                         HorizontalOptions="FillAndExpand"
                         HeightRequest="80"
                            />
+                    <ImageButton 
+                     CommandParameter="{Binding .}"                                     
+                     Command="{Binding Tweet.ReloadButtonClicked}"
+                     BackgroundColor="Transparent"
+                     Grid.Row="2"
+                     Grid.Column="1"  
+                     Source="{Binding Tweet.GetLikeImgSrc}"
+                     HeightRequest="50"/>
+
                     <StackLayout BackgroundColor="Red" HeightRequest="50">
                         <Label Text="Comments placeholder"></Label>
-                        
                     </StackLayout>
-                    <ImageButton 
-                                    CommandParameter="{Binding .}"                                     
-                                    Command="{Binding Tweet.ReloadButtonClicked}"
-                                    BackgroundColor="Transparent"
-                                    Grid.Row="2"
-                                    Grid.Column="1"  
-                                    Source="{Binding Tweet.GetLikeImgSrc}"
-                                    HeightRequest="50"
-                                     />
-                    <Button Clicked="Button_Clicked" Text="Tweeten" BackgroundColor="LightBlue" HorizontalOptions="EndAndExpand"/>
+
                 </StackLayout>
             </StackLayout>
 

@@ -18,7 +18,7 @@
                 <ListView.ItemTemplate>
                     <DataTemplate x:Name="test123">
                         <ViewCell x:Name="{Binding TweetID}">
-                            <Grid BackgroundColor="Bisque">
+                            <Grid BackgroundColor="LightBlue">
                                 <Grid.RowDefinitions>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
