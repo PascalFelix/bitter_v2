@@ -1,4 +1,5 @@
 ﻿using bitter_v2.Models;
+using bitter_v2.Models.Interfaces;
 using bitter_v2.Views.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -16,25 +17,8 @@ namespace bitter_v2.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class FeedView : ContentView
     {
-
-        public delegate void StatusUpdateHandler(object sender);
-        public event StatusUpdateHandler OnEndScroll;
-
         public delegate void TweetSelected(Tweet tweet);
         public event TweetSelected OnTweetSelected;
-
-        protected TweetList TweetList = new TweetList();
-        public ObservableCollection<Tweet> Tweets
-        {
-            get
-            {
-                return TweetList.Tweets;
-            }
-            set
-            {
-                TweetList.Tweets = value;
-            }
-        }
 
         private bool _isRefreshing = false;
         public bool IsRefreshing
@@ -47,8 +31,6 @@ namespace bitter_v2.Views
             }
         }
 
-        public IRefreshable refreshable = null;
-
         public ICommand RefreshCommand
         {
             get
@@ -57,46 +39,56 @@ namespace bitter_v2.Views
                 {
                     IsRefreshing = true;
 
-                    refreshable.Refresh();
+                    await _tweetList.ResetList(App.User.User.ID, App.User.Password);
 
                     IsRefreshing = false;
                 });
             }
         }
 
-        private bool _isFirstLoad = true;
-        private bool isFristLoad
+        private ITweetList _tweetList = null;
+        public ObservableCollection<Tweet> TweetList
         {
             get
             {
-                return _isFirstLoad;
+                return _tweetList.GetCollection();
             }
-            set
-            {
-                _isFirstLoad = value;
-            }
+        
         }
 
-        //public Command ReloadButtonClicked { get; set; }
-        public FeedView(IRefreshable _refreshable)
+        public FeedView(ITweetList tweetList, string userID, string password)
+        {
+            Init(tweetList, userID, password);
+        }
+    
+        private void Init(ITweetList tweetList, string userID, string password)
         {
             BindingContext = this;
-            refreshable = _refreshable;
+            _tweetList = tweetList;
+            _tweetList.LoadNextChunkAsync(userID, password);
             IsRefreshing = true;
+            _tweetList.GetCollection().CollectionChanged += Collection_CollectionChanged;
             InitializeComponent();
-            Tweets.CollectionChanged += Tweets_CollectionChanged;
-
         }
-        private void Tweets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+
+        public FeedView(ITweetList tweetList)
         {
-            if(Tweets.Count == Models.Feed.OffsetInt && isFristLoad)
+            this.Init(tweetList, App.User.User.ID, App.User.Password);
+            //BindingContext = this;
+            //_tweetList = tweetList;
+            //_tweetList.LoadNextChunkAsync(App.User.User.ID, App.User.Password);
+            //IsRefreshing = true;
+            //_tweetList.GetCollection().CollectionChanged += Collection_CollectionChanged;
+            //InitializeComponent();
+        }
+
+        private void Collection_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            if (_tweetList.GetCollection().Count == Models.Feed.OffsetInt)
             {
-                isFristLoad = false;
                 IsRefreshing = false;
             }
         }
-
-
         void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
@@ -104,23 +96,15 @@ namespace bitter_v2.Views
         void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
         {
             Tweet selectedItem = e.Item as Tweet;
-            OnTweetSelected(selectedItem);
+
+            OnTweetSelected?.Invoke(selectedItem);
         }
 
         private void ListView_ItemAppearing(object sender, ItemVisibilityEventArgs e)
         {
-            if(e.ItemIndex == TweetList.Tweets.Count - 1 && !IsRefreshing)
-            {
-                IsRefreshing = true;
-                OnEndScroll(this);
-                IsRefreshing = false;
-            }
+            _tweetList.LoadNextChunkOnLastIndex(App.User.User.ID, App.User.Password, e.ItemIndex);
 
         }
-
-
-
-
 
     }
 }

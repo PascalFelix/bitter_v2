@@ -14,7 +14,7 @@ using Xamarin.Forms.Xaml;
 namespace bitter_v2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Profile : ContentPage, IRefreshable
+    public partial class Profile : ContentPage,INewTweetCloseable
     {
 
         public User User { get; set; }
@@ -42,33 +42,16 @@ namespace bitter_v2.Views
             }
         }
 
-
-
-        protected TweetList TweetList = new TweetList();
-        public ObservableCollection<Tweet> Tweets
-        {
-            get
-            {
-                return TweetList.Tweets;
-            }
-            set
-            {
-                TweetList.Tweets = value;
-            }
-        }
-
         private FeedView FeedView = null;
 
         public Profile()
         {
+            var tmp = new TweetList();
+
             BindingContext = this;
-            FeedView = new FeedView(this);
+            FeedView = new FeedView(tmp);
             User = App.User.User;
             InitializeComponent();
-            FeedView.OnEndScroll += FeedView_OnEndScroll;
-            Tweets.CollectionChanged += Tweets_CollectionChanged;
-
-            TweetList.LoadAsync(User.ID, "0");
 
             var Grid = (Grid)this.FindByName("ProfileGrid");
             FeedView.IsClippedToBounds = true;
@@ -76,28 +59,15 @@ namespace bitter_v2.Views
             Grid.SetColumn(FeedView, 0);
             Grid.SetRow(FeedView, 1);
             Grid.SetColumnSpan(FeedView, 3);
+            FeedView.OnTweetSelected += FeedView_OnTweetSelected;
         }
 
-        public async void Refresh()
+        private void FeedView_OnTweetSelected(Tweet tweet)
         {
-
-            Tweets = new ObservableCollection<Tweet>();
-            await TweetList.LoadAsync(User.ID, "0");
-
+            var details = new TweetDetails(tweet, this);
+            OpenPopUp(details, 450);
         }
-
-        private void FeedView_OnEndScroll(object sender)
-        {
-
-        }
-
-        private void Tweets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            foreach (var item in e.NewItems)
-            {
-                FeedView.Tweets.Add((Tweet)item);
-            }
-        }
+    
 
         public Profile(User user)
         {
@@ -105,19 +75,28 @@ namespace bitter_v2.Views
             User = user;
             InitializeComponent();
 
-
-
         }
-
-        void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
+    
+        private View popupView = null;
+        private bool DetailsOpen = false;
+        private void OpenPopUp(View view, int height)
         {
-            Tweet selectedItem = e.SelectedItem as Tweet;
-        }
-        void OnListViewItemTapped(object sender, ItemTappedEventArgs e)
-        {
-            Tweet tappedItem = e.Item as Tweet;
+            if (!DetailsOpen)
+            {
+                DetailsOpen = true;
+                popupView = view;
+                var AbsoluteLayout = (AbsoluteLayout)this.FindByName("AbsolutLayoutProfile");
+                AbsoluteLayout.Children.Add(popupView, new Rectangle(10, 10, AbsoluteLayout.Width - 20, height));
+            }
         }
 
+        void INewTweetCloseable.CLoseMe(View view)
+        {
+            var AbsoluteLayout = (AbsoluteLayout)this.FindByName("AbsolutLayoutProfile");
+            AbsoluteLayout.Children.Remove(view);
+            DetailsOpen = false;
+            popupView = null;
+        }
 
     }
 }

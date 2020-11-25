@@ -5,7 +5,7 @@
     <StackLayout>
 
         <StackLayout >
-            <ListView ItemsSource="{Binding Tweets}" ItemSelected="OnListViewItemSelected" 
+            <ListView ItemsSource="{Binding TweetList}" ItemSelected="OnListViewItemSelected" 
                           ItemTapped="OnListViewItemTapped" 
                           ItemAppearing="ListView_ItemAppearing"
                           BackgroundColor="LightBlue"
@@ -41,7 +41,6 @@
                                        FontSize="16"/>
                                 <Label Text="{Binding Content}" 
                                        HorizontalOptions="Fill" 
-                                       HeightRequest="100"
                                        Grid.ColumnSpan="2"
                                        Grid.Column="1"  
                                        Grid.Row="1"/>
@@ -49,10 +48,11 @@
                                     CommandParameter="{Binding .}"                                     
                                     Command="{Binding ReloadButtonClicked}"
                                     BackgroundColor="Transparent"
+                                    HorizontalOptions="Start"
                                     Grid.Row="2"
                                     Grid.Column="1"  
                                     Source="{Binding GetLikeImgSrc}"
-                                    HeightRequest="50"
+                                    HeightRequest="30"
                                      />
                             </Grid>
 

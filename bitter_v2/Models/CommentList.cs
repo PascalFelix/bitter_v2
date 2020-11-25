@@ -1,5 +1,4 @@
-﻿using bitter_v2.Models.Interfaces;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
@@ -9,35 +8,24 @@ using System.Threading.Tasks;
 
 namespace bitter_v2.Models
 {
-    public class Feed : BaseListModel, ITweetList
+    public class CommentList : BaseListModel
     {
 
-        public ObservableCollection<Tweet> Collection = new ObservableCollection<Tweet>();
+        private string TweetID = "";
+        public new ObservableCollection<Comment> Collection = new ObservableCollection<Comment>();
 
-        public Feed() : base()
+        public CommentList(string tweetID)
         {
-
+            TweetID = tweetID;
         }
-
-        public override void ResetList()
-        {
-            base.ResetList();
-            this.Collection.Clear();
-        }
-
-        public new ObservableCollection<Tweet> GetCollection()
-        {
-            return this.Collection;
-        }
-
         public override async Task<BaseListModel> LoadAsync(string userID, string password, string offset)
         {
             Dictionary<string, string> data = new Dictionary<string, string>();
             data.Add("method", "get");
-            data.Add("type", "feed");
+            data.Add("type", "comments");
             data.Add("userid", userID);
-            data.Add("password", password);
             data.Add("offset", offset);
+            data.Add("tweetid", TweetID);
 
             var task = await base.LoadAsync(data);
             JObject tmp = (JObject)JsonConvert.DeserializeObject(task);
@@ -53,17 +41,21 @@ namespace bitter_v2.Models
                 }
                 else
                 {
-                    foreach (var y in value["tweetIDs"])
+                    foreach (var y in value["commentids"])
                     {
                         Ids.Add(y.ToString());
-                        var tweet = new Tweet(userID, password);
-                        await tweet.LoadAsync(y.ToString());
-                        this.Collection.Add(tweet);
+                        var comment = new Comment();
+                        await comment.LoadAsync(y.ToString());
+                        Collection.Add(comment);
+
                     }
-                    _firstLoadDone = true;
+
                 }
+
             }
             return this;
         }
+
+
     }
 }

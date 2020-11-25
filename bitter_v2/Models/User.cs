@@ -144,7 +144,7 @@ namespace bitter_v2.Models
                 var content = value.ToString();
                 if (String.IsNullOrEmpty(content))
                 {
-                    throw new UserNonExistent(userID + " Tweet not found");
+                    throw new UserNonExistent(userID + " User not found");
                 }
                 else
                 {

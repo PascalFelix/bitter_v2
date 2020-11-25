@@ -4,8 +4,8 @@
              x:Class="bitter_v2.Views.TweetDetails">
     <ContentView.Content>
 
-        <Frame CornerRadius="30"  
-                OutlineColor="White" 
+        <Frame CornerRadius="15"  
+                OutlineColor="Gray" 
                  Padding="0">
 
             <StackLayout>
@@ -23,31 +23,68 @@
 
                 </Grid>
 
-                <StackLayout Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="390" >
-                    <Label 
-                        Text="{Binding Tweet.User.UserName}"
-                        HorizontalOptions="FillAndExpand"
-                        HeightRequest="25"
+                <ScrollView Padding="5" HorizontalOptions="FillAndExpand">
+                    <StackLayout>
+                        <Label 
+                            Text="{Binding Tweet.User.UserName}"
+                            HorizontalOptions="FillAndExpand"
+                            FontSize="18"
+                            HeightRequest="25"
                            />
-                    <Label 
-                        Text="{Binding Tweet.Content}"
-                        HorizontalOptions="FillAndExpand"
-                        HeightRequest="80"
+                        <Label 
+                                Text="{Binding Tweet.Content}"
+                                HorizontalOptions="FillAndExpand"
+                                FontSize="25"
+                                
                            />
-                    <ImageButton 
-                     CommandParameter="{Binding .}"                                     
-                     Command="{Binding Tweet.ReloadButtonClicked}"
-                     BackgroundColor="Transparent"
-                     Grid.Row="2"
-                     Grid.Column="1"  
-                     Source="{Binding Tweet.GetLikeImgSrc}"
-                     HeightRequest="50"/>
+                        <ImageButton 
+                            CommandParameter="{Binding .}"                                     
+                            Command="{Binding Tweet.ReloadButtonClicked}"
+                            BackgroundColor="Transparent"
+                            Grid.Row="2"
+                            Grid.Column="1"  
+                            Source="{Binding Tweet.GetLikeImgSrc}"
+                            HorizontalOptions="Start"
+                            HeightRequest="30"/>
 
-                    <StackLayout BackgroundColor="Red" HeightRequest="50">
-                        <Label Text="Comments placeholder"></Label>
+                        <Frame OutlineColor="Gray" BackgroundColor="LightBlue" CornerRadius="5" Margin="0" Padding="0"  >
+                            <StackLayout x:Name="CommentStackPlaceholder">
+                                <Frame BackgroundColor="Transparent" Margin="0" HorizontalOptions="CenterAndExpand">
+                                    <Label 
+                                        Text="Kommentare"
+                                        FontSize="15"
+                                           />
+                                </Frame>
+                                <BoxView 
+                                   HeightRequest="1"
+                                   Color="Black"
+                                   Margin ="0, 0, 0, 0"/>
+                            </StackLayout>
+                        </Frame>
+                        <BoxView 
+                           HeightRequest="1"
+                           Color="Black"
+                           Margin ="0, 0, 0, 0"/>
+                        <Label Text="Neuer Kommentar"  >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ToggleNewComment}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <StackLayout x:Name="newCommentStack" IsVisible="false">
+                            <Editor  
+                            HorizontalOptions="Fill"
+                            HeightRequest="100"
+                            x:Name="commentInput" 
+                            Text="{Binding NewCommentString}" 
+                            Placeholder="Neuer Kommentar"
+                            >
+                            </Editor>
+                            <Button x:Name="commentCommitBtn" Clicked="NewCommentCommit"  Text="Kommentieren" BackgroundColor="LightBlue" BorderRadius="20" Margin="10"  VerticalOptions="Center"/>
+                        </StackLayout>
+
                     </StackLayout>
-
-                </StackLayout>
+                </ScrollView>
             </StackLayout>
 
 

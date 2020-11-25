@@ -14,87 +14,51 @@ using Xamarin.Forms.Xaml;
 namespace bitter_v2.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class Feed : ContentPage, INewTweetCloseable, IRefreshable
+    public partial class Feed : ContentPage, INewTweetCloseable
     {
-
-        private bool DetailsOpen = false;
-        public bitter_v2.Models.Feed FeedObject = new bitter_v2.Models.Feed();
-
-        public ObservableCollection<Tweet> Tweets { get { return FeedObject.Tweets; } set { FeedObject.Tweets = value; } }
-
         private FeedView FeedView = null;
         public Feed()
         {
-            FeedView = new FeedView(this);
-            BindingContext = this;
-            InitializeComponent();
-            FeedView.OnTweetSelected += FeedView_OnTweetSelected;
-            FeedView.OnEndScroll += FeedView_OnEndScrollAsync;
-            Tweets.CollectionChanged += Tweets_CollectionChanged;
-            var Stack = (StackLayout)this.FindByName("StackList");
-            Stack.Children.Add(FeedView);
-
-            FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
+            try
+            {
+                var FeedObject = new FeedViewModel();
+                FeedView = new FeedView(FeedObject);
+                BindingContext = this;
+                InitializeComponent();
+                FeedView.OnTweetSelected += FeedView_OnTweetSelected;
+                var Stack = (StackLayout)this.FindByName("StackList");
+                Stack.Children.Add(FeedView);
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Fehler", ex.Message, "OK");
+            }
         }
 
         private void FeedView_OnTweetSelected(Tweet tweet)
         {
+            var details = new TweetDetails(tweet, this);
+            OpenPopUp(details, 450);
+        }
+
+        private View popupView = null;
+        private bool DetailsOpen = false;
+        private void OpenPopUp(View view, int height)
+        {
             if (!DetailsOpen)
             {
-                var details = new TweetDetails(tweet, this);
-                var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
-                AbsoluteLayout.Children.Add(details, new Rectangle(10, 10, AbsoluteLayout.Width - 20, 450));
                 DetailsOpen = true;
-            }
-        }
-
-        public async void Refresh()
-        {
-            Tweets.Clear();
-            FeedObject.ResetOffset();
-            await FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
-        }
-        private async void FeedView_OnEndScrollAsync(object sender)
-        {
-            await FeedObject.LoadNextChunkAsync(App.User.Username, App.User.Password);
-        }
-
-        private void Tweets_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
-        {
-            if (e.NewItems != null)
-            {
-                foreach (var item in e.NewItems)
-                {
-                    FeedView.Tweets.Add((Tweet)item);
-                }
-            }
-            else
-            {
-                FeedView.Tweets.Clear();
+                popupView = view;
+                var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
+                AbsoluteLayout.Children.Add(popupView, new Rectangle(10, 10, AbsoluteLayout.Width - 20, height));
             }
         }
 
 
-
-        private NewTweet NewTweet = null;
         private void ImageButton_Pressed(object sender, EventArgs e)
         {
-
-            if (!DetailsOpen)
-            {
-                NewTweet = new NewTweet(this);
-                var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
-                AbsoluteLayout.Children.Add(NewTweet, new Rectangle(10, 10, AbsoluteLayout.Width - 20, 200));
-                DetailsOpen = true;
-            }
-            else if(NewTweet != null)
-            {
-                var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
-                AbsoluteLayout.Children.Remove(NewTweet);
-                NewTweet = null;
-                DetailsOpen = false;
-            }
-
+            var NewTweet = new NewTweet(this);
+            OpenPopUp(NewTweet, 250);
         }
 
         void INewTweetCloseable.CLoseMe(View view)
@@ -102,6 +66,7 @@ namespace bitter_v2.Views
             var AbsoluteLayout = (AbsoluteLayout)this.FindByName("TestLayout");
             AbsoluteLayout.Children.Remove(view);
             DetailsOpen = false;
+            popupView = null;
         }
 
 

@@ -25,12 +25,20 @@ namespace bitter_v2.Views
             BindingContext = this;
         }
 
-        private void Button_Clicked(object sender, EventArgs e)
+        private void CommitTweetButton(object sender, EventArgs e)
         {
-            var tweet = new Tweet();
-            tweet.PutTweet(App.User, NewTweetString);
+            var tweet = new Tweet(App.User.User.ID,App.User.Password);
+            tweet.PutTweet(App.User.User.ID,App.User.Password, NewTweetString);
 
             parentView.CLoseMe(this);
         }
+
+        private void ExitButtonClicked(object sender, EventArgs e)
+        {
+            parentView.CLoseMe(this);
+        }
+
+        
+
     }
 }

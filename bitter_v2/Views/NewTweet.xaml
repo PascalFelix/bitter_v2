@@ -9,7 +9,19 @@
                  Padding="0">
 
             <StackLayout>
-                <Label BackgroundColor="#03A9F4" Text="       Neuer Tweet" HorizontalOptions="FillAndExpand" />
+                <Grid BackgroundColor="#03A9F4">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="60"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button BackgroundColor="#03A9F4" WidthRequest="40"  VerticalOptions="Fill"  Grid.Row="0" Grid.Column="0"  Clicked="ExitButtonClicked" Text="&lt;-"/>
+                    <Label Grid.Row="0" Grid.Column="1" FontSize="20"  Text="Neuer Tweet" VerticalOptions="Center"  />
+
+                </Grid>
                 <StackLayout Padding="5" HorizontalOptions="FillAndExpand" HeightRequest="150" >
                     <Editor  HorizontalOptions="Fill"
                             HeightRequest="100"
@@ -19,7 +31,7 @@
                             Grid.Column="1" 
                             Grid.Row="1">
                     </Editor>
-                    <Button Clicked="Button_Clicked" Text="Tweeten" BackgroundColor="LightBlue" HorizontalOptions="EndAndExpand"/>
+                    <Button Clicked="CommitTweetButton" Text="Tweeten" BackgroundColor="LightBlue" BorderRadius="20" Margin="10"  VerticalOptions="Center"/>
                 </StackLayout>
             </StackLayout>
 
