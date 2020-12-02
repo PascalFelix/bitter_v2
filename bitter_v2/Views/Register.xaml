@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="bitter_v2.Views.Register">
+    <ContentPage.Content>
+        <StackLayout Margin="0,100,0,20">
+            <Frame CornerRadius="15"  
+                       Margin="20,0,20,0"                       
+                       Padding="5"                    
+                       OutlineColor="Gray" >
+                <Entry x:Name="regusername" Text="{Binding RegisterUserName}" Placeholder="Anmeldename" ></Entry>
+            </Frame>
+
+            <Frame  
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    OutlineColor="Gray"
+                    Padding="5">
+                <Entry x:Name="regpassword" Text="{Binding RegisterPassword}" Placeholder="Password"></Entry>
+            </Frame>
+
+            <Frame 
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    OutlineColor="Gray"
+                    Padding="5">
+                <Entry x:Name="regpassword2" Text="{Binding RegisterPassword2}" Placeholder="Password" ></Entry>
+            </Frame>
+            <Frame  
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    Padding="5"
+                    OutlineColor="Gray">
+                <Button x:Name="RegisterBtn" BackgroundColor="Transparent" Text="Register" Clicked="RegisterBtnClicked" ></Button>
+            </Frame>
+           
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

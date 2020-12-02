@@ -20,7 +20,7 @@
                         <ViewCell x:Name="{Binding TweetID}">
                             <Grid BackgroundColor="LightBlue">
                                 <Grid.RowDefinitions>
-                                    <RowDefinition Height="Auto"/>
+                                    <RowDefinition Height="50"/>
                                     <RowDefinition Height="Auto"/>
                                     <RowDefinition Height="Auto"/>
                                 </Grid.RowDefinitions>
@@ -29,8 +29,13 @@
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
                                 </Grid.ColumnDefinitions>
-                                <Image Source="img.png"    
+                                <ImageButton Source="nutzer.png"    
                                        HorizontalOptions="Center"
+                                       VerticalOptions="Start"
+                                       CommandParameter="{Binding .}"  
+                                       BackgroundColor="Transparent"
+                                       Command="{Binding ProfileClicked}"
+                                       Margin="10"
                                        Grid.Column="0" 
                                        Grid.Row="0" />
                                 <Label Text="{Binding User.UserName}" 

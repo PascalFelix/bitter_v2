@@ -63,6 +63,7 @@ namespace bitter_v2.Models
                 if (Remeberme)
                 {
                     Preferences.Set("password", value);
+                    _password = value;
                 }
                 else
                 {

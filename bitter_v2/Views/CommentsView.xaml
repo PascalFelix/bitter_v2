@@ -19,13 +19,19 @@
 
                         <Frame OutlineColor="Gray" Margin="2" Padding="5">
                             <StackLayout>
-                                
-                          
-                      
-                        <Label Text="{Binding User.UserName}" 
+
+
+
+                                <Label Text="{Binding User.UserName}" 
                                        Grid.Row="0" 
                                       Grid.Column="0" 
-                                   />
+                                   >
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer
+                                            Command="{Binding ProfileClicked}"
+                                             CommandParameter="{Binding .}"     />
+                                    </Label.GestureRecognizers>
+                                </Label>
                         <Label Text="{Binding Content}" 
                                        Grid.Row="1" 
                                       Grid.Column="0" 

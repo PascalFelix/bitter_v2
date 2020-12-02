@@ -39,16 +39,22 @@ namespace bitter_v2
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        MainPage = new Login(this);
+                        var login = new Login(this);
+                        login.Title = "Login";
+                        MainPage = new NavigationPage(login);
                     });
 
                 }
             });
-            MainPage = new Loading();
+            var login = new Login(this);
+            login.Title = "Login";
+            MainPage = new NavigationPage(login);
         }
         public void Logout()
         {
-            MainPage = new Login(this);
+            var login = new Login(this);
+            login.Title = "Login";
+            MainPage = new NavigationPage(login);
         }
 
 

@@ -46,6 +46,8 @@ namespace bitter_v2.Views
             }
         }
 
+
+
         private ITweetList _tweetList = null;
         public ObservableCollection<Tweet> TweetList
         {
@@ -88,7 +90,23 @@ namespace bitter_v2.Views
             {
                 IsRefreshing = false;
             }
+
+            if(e.NewItems != null && e.NewItems.Count > 0)
+            {
+                foreach(var item in e.NewItems)
+                {
+                    var tweet = item as Tweet;
+                    tweet.OnProfileClicked += Tweet_OnProfileClicked;
+                }
+            }
+
         }
+
+        private void Tweet_OnProfileClicked(User user)
+        {
+            Navigation.PushAsync(new Profile(user));
+        }
+
         void OnListViewItemSelected(object sender, SelectedItemChangedEventArgs e)
         {
 
@@ -105,6 +123,7 @@ namespace bitter_v2.Views
             _tweetList.LoadNextChunkOnLastIndex(App.User.User.ID, App.User.Password, e.ItemIndex);
 
         }
+
 
     }
 }

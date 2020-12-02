@@ -3,45 +3,54 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="bitter_v2.Views.Login">
     <ContentPage.Content>
-        <StackLayout>
-            <Label HorizontalOptions="Fill" Padding="5" Text="Anmelden" FontSize="26" BackgroundColor="#03A9F4"></Label>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Benutzername" Grid.Column="0" Grid.Row="0"/>
-                <Entry x:Name="username" Text="{Binding UserName}" Placeholder="Anmeldename" Grid.Column="1" Grid.Row="0"></Entry>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Passwort" Grid.Column="0" Grid.Row="1"/>
-                <Entry x:Name="password" Text="{Binding Password}" Placeholder="Password" Grid.Column="1" Grid.Row="1"></Entry>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Angemeldet bleiben" Grid.Column="0" Grid.Row="2"/>
-                <Switch IsToggled="{Binding Remeberme}" Grid.Column="1" Grid.Row="2" HorizontalOptions="Start"/>
-            </Grid>
-            <Button Text="Anmelden" Clicked="Button_Clicked"></Button>
-            <Label HorizontalOptions="Fill" Padding="5" Text="Registrieren" FontSize="26" BackgroundColor="#03A9F4"></Label>
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                    <RowDefinition/>
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Benutzername" Grid.Column="0" Grid.Row="0"/>
-                <Entry x:Name="regusername" Text="{Binding RegisterUserName}" Placeholder="Anmeldename" Grid.Column="1" Grid.Row="0"></Entry>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Passwort" Grid.Column="0" Grid.Row="1"/>
-                <Entry x:Name="regpassword" Text="{Binding RegisterPassword}" Placeholder="Password" Grid.Column="1" Grid.Row="1"></Entry>
-                <Label Padding="5,0,0,0" VerticalOptions="Center" Text="Passwort wiederholen" Grid.Column="0" Grid.Row="2"/>
-                <Entry x:Name="regpassword2" Text="{Binding RegisterPassword2}" Placeholder="Password" Grid.Column="1" Grid.Row="2"></Entry>
-            </Grid>
-            <Button x:Name="RegisterBtn" Text="Anmelden" Clicked="RegisterBtnClicked" ></Button>
+        <StackLayout Margin="0,100,0,20">
+
+            <StackLayout>
+                <Frame  
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    OutlineColor="Gray"
+                    Padding="5">
+                    <Entry x:Name="username" Text="{Binding UserName}" Placeholder="Anmeldename" ></Entry>
+                </Frame>
+                <Frame  
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    OutlineColor="Gray"
+                    Padding="5">
+                    <Entry x:Name="password" Text="{Binding Password}" Placeholder="Password"></Entry>
+                </Frame>
+
+                <Frame  
+                    CornerRadius="15"  
+                    Margin="20,0,20,0"
+                    Padding="0"
+                    OutlineColor="Gray">
+                    <Button  Text="Anmelden" BackgroundColor="Transparent"  Clicked="Button_Clicked"></Button>
+                </Frame>
+                <Grid Margin="20,0,20,0" Padding="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Angemeldet bleiben" Grid.Column="0" Grid.Row="0"></Label>
+                    <Switch IsToggled="{Binding Remeberme}" Grid.Column="0" Grid.Row="1" HorizontalOptions="Start"/>
+
+                    <Label Text="Regrestrieren" Grid.Column="1" Grid.Row="0" HorizontalOptions="End">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding RegisterCommand}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+                              
+
+            </StackLayout>
+
+
+
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

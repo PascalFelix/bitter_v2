@@ -32,5 +32,6 @@ namespace bitter_v2.Views
 
             MasterPage.ListView.SelectedItem = null;
         }
+
     }
 }

@@ -17,9 +17,21 @@ namespace bitter_v2.Models
         private string NotLikedImageSrc = "noLike.img";
         private string LikedImageSrc = "like.img";
 
-
+        public delegate void ProfileClickedDelegate(User user);
+        public event ProfileClickedDelegate OnProfileClicked;
 
         public Command ReloadButtonClicked { get; set; }
+
+        public Command ProfileClicked
+        {
+            get
+            {
+                return new Command((x) =>
+                {
+                    OnProfileClicked?.Invoke(this.User);
+                });
+            }
+        }
 
         public string TweetID { get; set; }
         public string Content { get; set; }

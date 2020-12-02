@@ -12,7 +12,7 @@ namespace bitter_v2.Models
     {
 
         private string TweetID = "";
-        public new ObservableCollection<Comment> Collection = new ObservableCollection<Comment>();
+        public new ObservableCollection<CommentViewModel> Collection = new ObservableCollection<CommentViewModel>();
 
         public CommentList(string tweetID)
         {
@@ -44,7 +44,7 @@ namespace bitter_v2.Models
                     foreach (var y in value["commentids"])
                     {
                         Ids.Add(y.ToString());
-                        var comment = new Comment();
+                        var comment = new CommentViewModel();
                         await comment.LoadAsync(y.ToString());
                         Collection.Add(comment);
 

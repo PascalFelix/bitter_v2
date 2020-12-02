@@ -38,15 +38,6 @@ namespace bitter_v2.Models
         public string Timestamp { get; set; }
 
 
-        public Command ToggleLikeCommand = null;
-
-        public Comment()
-        {
-            ToggleLikeCommand = new Command(async x =>
-            {
-                await ToggleLike(App.User);
-            });
-        }
 
         public virtual async Task<Comment> LoadAsync(string commentID)
         {

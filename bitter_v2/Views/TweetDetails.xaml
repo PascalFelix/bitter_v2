@@ -28,9 +28,13 @@
                         <Label 
                             Text="{Binding Tweet.User.UserName}"
                             HorizontalOptions="FillAndExpand"
-                            FontSize="18"
+                            FontSize="18"                         
                             HeightRequest="25"
-                           />
+                           >
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding OpenProfile}" />
+                            </Label.GestureRecognizers>
+                        </Label>
                         <Label 
                                 Text="{Binding Tweet.Content}"
                                 HorizontalOptions="FillAndExpand"

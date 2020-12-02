@@ -25,6 +25,7 @@ namespace bitter_v2.Views
             get; set;
         }
         public ICommand ToggleNewComment => new Command(NewTweetToogle);
+        public ICommand OpenProfile => new Command(OpenProfileNav);
 
         public TweetDetails(Tweet CurrentTweet, INewTweetCloseable newTweetCloseable)
         {
@@ -47,6 +48,11 @@ namespace bitter_v2.Views
             await newComment.PutComment(App.User, NewCommentString, Tweet.TweetID);
             NewTweetToogle();
             CommentsView.Reload();
+        }
+
+        private void OpenProfileNav()
+        {
+            Navigation.PushAsync(new Profile(Tweet.User));
         }
 
         private void NewTweetToogle()

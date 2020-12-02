@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Windows.Input;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -47,25 +47,7 @@ namespace bitter_v2.Views
                 App.User.Remeberme = value;
             }
         }
-
-
-        public string RegisterUserName
-        {
-            get;
-            set;
-        }
-        public string RegisterPassword
-        {
-            get;
-            set;
-        }
-        public string RegisterPassword2
-        {
-            get;
-            set;
-        }
-
-
+        public ICommand RegisterCommand => new Command(OpenRegister);
         public Login(App app)
         {
             BindingContext = this;
@@ -79,23 +61,13 @@ namespace bitter_v2.Views
             App.User.Password = Password;
             HeadApp.Relogin();
         }
-        private async void RegisterBtnClicked(object sender, EventArgs e)
+        private void OpenRegister()
         {
-            try
-            {
-                var returnValue = await App.User.Register(RegisterUserName, RegisterPassword, RegisterPassword2);
-                if (returnValue)
-                {
-                    App.User.Username = RegisterUserName;
-                    App.User.Password = RegisterPassword;
-                    Remeberme = true;
-                    HeadApp.Relogin();
-                }
-            }
-            catch (Exception ex)
-            {
-               await DisplayAlert("Fehler", ex.Message, "Okay");
-            }
+            var reg = new Register(HeadApp);
+            reg.Title = "Regrestrieren";
+            Navigation.PushAsync(reg);
         }
+
+
     }
 }

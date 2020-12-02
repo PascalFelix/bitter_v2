@@ -30,7 +30,7 @@ namespace bitter_v2.Views
         {
             get
             {
-                return "Follower (" + User.Follows + ")";
+                return "Follows (" + User.Follows + ")";
             }
         }
 
@@ -46,13 +46,20 @@ namespace bitter_v2.Views
 
         public Profile()
         {
-            var tmp = new TweetList();
-
             BindingContext = this;
-            FeedView = new FeedView(tmp);
             User = App.User.User;
             InitializeComponent();
+            Init(App.User.User, App.User.User.ID,App.User.Password);
 
+        }
+
+        private void Init(User user, string UserID, string password = "")
+        {
+            var tmp = new TweetList();
+
+         
+            FeedView = new FeedView(tmp, UserID,password);
+   
             var Grid = (Grid)this.FindByName("ProfileGrid");
             FeedView.IsClippedToBounds = true;
             Grid.Children.Add(FeedView);
@@ -74,6 +81,7 @@ namespace bitter_v2.Views
             BindingContext = this;
             User = user;
             InitializeComponent();
+            Init(User, User.ID);
 
         }
     
