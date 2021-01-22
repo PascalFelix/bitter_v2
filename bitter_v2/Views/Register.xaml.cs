@@ -56,7 +56,7 @@ namespace bitter_v2.Views
                 {
                     App.User.Username = RegisterUserName;
                     App.User.Password = RegisterPassword;
-                    Remeberme = true;
+                    Remeberme = false;
                     HeadApp.Relogin();
                 }
             }
